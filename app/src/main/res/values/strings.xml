@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">AGIS project</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="register_underlined"><u>Register</u></string>
+
+    <string-array name="roles">
+        <item>User</item>
+        <item>Admin</item>
+    </string-array>
+
+</resources>

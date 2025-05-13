@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "182129160076",
+    "project_id": "agiproject-50168",
+    "storage_bucket": "agiproject-50168.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182129160076:android:628e861b3d1028ca4d70a9",
+        "android_client_info": {
+          "package_name": "com.example.agiprojectfinal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAi3PUW9URJc9z_ykKJLBnjp2ItYR57N6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182129160076:android:09d22df414bb1e6f4d70a9",
+        "android_client_info": {
+          "package_name": "com.example.agisproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAi3PUW9URJc9z_ykKJLBnjp2ItYR57N6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
