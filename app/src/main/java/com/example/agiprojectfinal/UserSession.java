@@ -6,6 +6,7 @@ public class UserSession {
     private String userId;
     private String userEmail;
     private boolean isAdmin;
+    private String userName;
 
     private UserSession() {
         // Private constructor to prevent instantiation
@@ -55,5 +56,13 @@ public class UserSession {
         userId = null;
         userEmail = null;
         isAdmin = false;
+    }
+    public void setUsername(String userName)
+    {
+        this.userName= userName;
+    }
+
+    public String getUsername() {
+        return userName;
     }
 } 
