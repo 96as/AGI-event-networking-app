@@ -15,18 +15,18 @@
             android:id="@+id/usernameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="340dp"
             android:layout_marginBottom="10dp"
-            android:paddingLeft="5dp"
             android:linksClickable="true"
+            android:paddingLeft="5dp"
             android:text="Patagonia"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/postText"
+
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.003"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/postDate"
@@ -42,28 +42,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="56dp"
-            android:layout_height="51dp"
-            app:layout_constraintBottom_toBottomOf="@+id/postText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/postText"
             android:layout_width="355dp"
             android:layout_height="70dp"
             android:layout_marginTop="28dp"
-            android:text="Patagonia, Inc. President Jenna Johnson will join @theSkimm to discuss how paid leave and family support are central to Patagonia's work to save the home planet"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="56dp"
             android:paddingLeft="5dp"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            android:text="Patagonia, Inc. President Jenna Johnson will join @theSkimm to discuss how paid leave and family support are central to Patagonia's work to save the home planet"
+
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
