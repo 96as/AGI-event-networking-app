@@ -80,6 +80,10 @@ public class Login extends AppCompatActivity {
                                                     String role = document.getString("role");
                                                     UserSession.getInstance().setUserRole(role);
                                                     
+                                                    // Check if user is admin based on email
+                                                    boolean isAdmin = user.getEmail().equals("admin@alfaisal.edu");
+                                                    UserSession.getInstance().setIsAdmin(isAdmin);
+                                                    
                                                     // Navigate to main activity
                                                     startActivity(new Intent(Login.this, GlobalChatPage.class));
                                                     finish();

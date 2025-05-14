@@ -3,6 +3,7 @@ package com.example.agiprojectfinal;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -24,6 +25,10 @@ public class AddPostPage extends AppCompatActivity {
             return insets;
         });
 
+        // Set Add Agenda button visibility based on admin status
+        Button addAgendaButton = findViewById(R.id.addAgenda);
+        boolean isAdmin = UserSession.getInstance().isAdmin();
+        addAgendaButton.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
 
         // Footer
         ImageView mainPageBtn = (ImageView) findViewById(R.id.logo);

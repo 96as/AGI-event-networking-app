@@ -5,6 +5,7 @@ public class UserSession {
     private String userRole;
     private String userId;
     private String userEmail;
+    private boolean isAdmin;
 
     private UserSession() {
         // Private constructor to prevent instantiation
@@ -42,12 +43,17 @@ public class UserSession {
     }
 
     public boolean isAdmin() {
-        return "Admin".equals(userRole);
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     public void clearSession() {
         userRole = null;
         userId = null;
         userEmail = null;
+        isAdmin = false;
     }
 } 
