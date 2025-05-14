@@ -41,7 +41,7 @@ public class Register extends AppCompatActivity {
         EditText name = (EditText) findViewById(R.id.register_name);
         EditText email = (EditText) findViewById(R.id.register_email);
         EditText password = (EditText) findViewById(R.id.register_password);
-        Spinner role = (Spinner) findViewById(R.id.spinner_role);
+
 
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,8 +49,7 @@ public class Register extends AppCompatActivity {
 
                 if(name.getText().toString().isEmpty() ||
                         email.getText().toString().isEmpty() ||
-                        password.getText().toString().isEmpty() ||
-                        role.getSelectedItem().toString().isEmpty())
+                        password.getText().toString().isEmpty())
                 {
                     Toast.makeText(Register.this,"Empty fields are required!", Toast.LENGTH_LONG).show();
                 }
@@ -59,7 +58,6 @@ public class Register extends AppCompatActivity {
                     name_value = name.getText().toString();
                     email_value = email.getText().toString();
                     pass_value = password.getText().toString();
-                    role_value = role.getSelectedItem().toString();
                     addUser(name_value, email_value, pass_value, role_value);
 
                 }
