@@ -87,7 +87,7 @@ public class GlobalChatPage extends AppCompatActivity {
         directBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(GlobalChatPage.this, DirectMessaging.class));
+                startActivity(new Intent(GlobalChatPage.this, AllMessagesDisplay.class));
             }
         });
     }

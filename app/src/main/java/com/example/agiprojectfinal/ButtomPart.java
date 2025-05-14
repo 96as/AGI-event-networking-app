@@ -40,7 +40,7 @@ public class ButtomPart extends AppCompatActivity {
         directBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ButtomPart.this, DirectMessaging.class));
+                startActivity(new Intent(ButtomPart.this, AllMessagesDisplay.class));
             }
         });
 

@@ -28,6 +28,9 @@
             android:name=".AddAgenda"
             android:exported="false" />
         <activity
+            android:name=".AllMessagesDisplay"
+            android:exported="false" />
+        <activity
             android:name=".ViewAgenda"
             android:exported="false" />
         <activity

@@ -60,7 +60,7 @@ public class NotificationPage extends AppCompatActivity {
 
         mainPageBtn.setOnClickListener(v -> startActivity(new Intent(NotificationPage.this, GlobalChatPage.class)));
         notificationBtn.setOnClickListener(v -> startActivity(new Intent(NotificationPage.this, NotificationPage.class)));
-        directBtn.setOnClickListener(v -> startActivity(new Intent(NotificationPage.this, DirectMessaging.class)));
+        directBtn.setOnClickListener(v -> startActivity(new Intent(NotificationPage.this, AllMessagesDisplay.class)));
 
         // Load notifications
         loadNotifications();
