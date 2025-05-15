@@ -130,7 +130,7 @@ public class AddPostPage extends AppCompatActivity {
         directBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddPostPage.this, DirectMessaging.class));
+                startActivity(new Intent(AddPostPage.this, AllMessagesDisplay.class));
             }
         });
     }

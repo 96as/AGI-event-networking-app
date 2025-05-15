@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -27,8 +29,7 @@ import java.util.Map;
 
 public class Register extends AppCompatActivity {
 
-
-
+    UserModel userModel;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser user = mAuth.getCurrentUser();
     String name_value, email_value, pass_value, role_value;
@@ -82,6 +83,8 @@ public class Register extends AppCompatActivity {
                             userInfo.put("name", user_name);
                             userInfo.put("email", user_email);
                             userInfo.put("role", user_role);
+
+                            userModel = new UserModel(user_name, user_email, Timestamp.now(), uid);
 
                             db.collection("Users").document(uid)
                                     .set(userInfo)

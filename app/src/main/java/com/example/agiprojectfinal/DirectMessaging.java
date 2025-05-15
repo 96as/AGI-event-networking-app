@@ -58,8 +58,13 @@ public class DirectMessaging extends AppCompatActivity {
         directBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DirectMessaging.this, DirectMessaging.class));
+                startActivity(new Intent(DirectMessaging.this, AllMessagesDisplay.class));
             }
         });
+
+        UserModel userModel = new UserModel();
+        Intent intent = new Intent();
+        userModel.setName(intent.getStringExtra("name"));
+        userModel.setUserID(intent.getStringExtra("Id"));
     }
 }

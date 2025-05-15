@@ -58,7 +58,7 @@ public class DirectPage extends AppCompatActivity {
         directBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DirectPage.this, DirectMessaging.class));
+                startActivity(new Intent(DirectPage.this, AllMessagesDisplay.class));
             }
         });
 
