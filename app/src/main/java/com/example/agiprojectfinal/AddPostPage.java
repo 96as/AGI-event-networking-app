@@ -44,16 +44,10 @@ public class AddPostPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_post_page);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         // Set Add Agenda button visibility based on admin status
-        Button addAgendaButton = findViewById(R.id.addAgenda);
+        Button addAgendaButton = (Button) findViewById(R.id.addAgenda);
         boolean isAdmin = UserSession.getInstance().isAdmin();
         addAgendaButton.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
 
@@ -62,11 +56,11 @@ public class AddPostPage extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         // Initialize views
-        postText = findViewById(R.id.postText);
-        addPostButton = findViewById(R.id.addPostButton);
+        EditText postText = (EditText) findViewById(R.id.postText);
+        Button submitPostButton = (Button) findViewById(R.id.submitPostButton);
 
         // Set up post button
-        addPostButton.setOnClickListener(new View.OnClickListener() {
+        submitPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String content = postText.getText().toString().trim();
@@ -75,7 +69,7 @@ public class AddPostPage extends AppCompatActivity {
                     return;
                 }
 
-                // Get current user info
+                 //Get current user info
                 String userId = UserSession.getInstance().getUserId();
                 String username = UserSession.getInstance().getUsername();
 
