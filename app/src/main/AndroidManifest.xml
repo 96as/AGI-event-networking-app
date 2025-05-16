@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -24,6 +27,9 @@
             </intent-filter>
         </service>
 
+        <activity
+            android:name=".activity_editProfile"
+            android:exported="false" />
         <activity
             android:name=".AddAgenda"
             android:exported="false" />

@@ -22,12 +22,14 @@
         android:paddingBottom="16dp">
 
         <ImageView
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="16dp"
-            android:contentDescription="AGI Logo"
-            android:src="@drawable/agislogo" />
+            android:id="@+id/profilePic"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/ic_launcher_background"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_foreground" />
 
         <TextView
             android:id="@+id/profileName"
@@ -56,10 +58,11 @@
             app:cardElevation="4dp">
 
             <TextView
+                android:id="@+id/profileBio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:text="My name is Abdulrahman Mahmalji"
+                android:text=""
                 android:textSize="17sp"
                 android:textColor="#444444" />
         </androidx.cardview.widget.CardView>
@@ -74,6 +77,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/roleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -83,6 +87,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/emailTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

@@ -47,5 +47,7 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation(libs.firebase.ui.firestore)
+    implementation("com.squareup.picasso:picasso:2.71828")
+    implementation("com.google.firebase:firebase-storage:20.3.0")
 }
 
