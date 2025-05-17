@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".DirectMessaging">
+    android:padding="8dp">
 
+    <!-- Left (received) message -->
     <LinearLayout
         android:id="@+id/leftMessageLayout"
         android:layout_width="wrap_content"
@@ -15,44 +13,36 @@
         android:background="@drawable/chat_bubble"
         android:backgroundTint="#0012FF"
         android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/rightMessage"
-        app:layout_constraintHorizontal_bias="0.09"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.085">
-
+        app:layout_constraintBottom_toBottomOf="parent">
         <TextView
             android:id="@+id/leftMessageTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textColor="@android:color/white"
+            android:textSize="16sp"/>
     </LinearLayout>
 
+    <!-- Right (sent) message -->
     <LinearLayout
-        android:id="@+id/rightMessage"
+        android:id="@+id/rightMessageLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:background="@drawable/chat_bubble"
         android:backgroundTint="#22DC27"
         android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.946"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.085">
-
+        app:layout_constraintBottom_toBottomOf="parent">
         <TextView
             android:id="@+id/rightMessageTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textColor="@android:color/white"
+            android:textSize="16sp"/>
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout> 

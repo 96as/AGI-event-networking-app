@@ -1,5 +1,8 @@
 package com.example.agiprojectfinal;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 public class UserSession {
     private static UserSession instance;
     private String userRole;
@@ -7,6 +10,9 @@ public class UserSession {
     private String userEmail;
     private boolean isAdmin;
     private String userName;
+    private SharedPreferences prefs;
+    private static final String PREFS_NAME = "user_session_prefs";
+    private static final String KEY_USER_ID = "user_id";
 
     private UserSession() {
         // Private constructor to prevent instantiation
@@ -19,6 +25,12 @@ public class UserSession {
         return instance;
     }
 
+    public void init(Context context) {
+        if (prefs == null) {
+            prefs = context.getApplicationContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        }
+    }
+
     public String getUserRole() {
         return userRole;
     }
@@ -28,11 +40,23 @@ public class UserSession {
     }
 
     public String getUserId() {
+        if (userId == null && prefs != null) {
+            userId = prefs.getString(KEY_USER_ID, null);
+        }
         return userId;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
+        if (prefs != null) {
+            prefs.edit().putString(KEY_USER_ID, userId).apply();
+        }
+    }
+
+    public void loadUserIdFromPrefs() {
+        if (prefs != null) {
+            userId = prefs.getString(KEY_USER_ID, null);
+        }
     }
 
     public String getUserEmail() {

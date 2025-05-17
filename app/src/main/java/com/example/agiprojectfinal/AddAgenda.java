@@ -2,6 +2,7 @@ package com.example.agiprojectfinal;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,7 +36,15 @@ public class AddAgenda extends AppCompatActivity {
         setContentView(R.layout.activity_add_agenda);
 
         // Check if user is admin
-        if (!UserSession.getInstance().isAdmin()) {
+        boolean isAdmin = UserSession.getInstance().isAdmin();
+        String userRole = UserSession.getInstance().getUserRole();
+        String userId = UserSession.getInstance().getUserId();
+        
+        Log.d("AddAgenda", "User ID: " + userId);
+        Log.d("AddAgenda", "User Role: " + userRole);
+        Log.d("AddAgenda", "Is Admin: " + isAdmin);
+
+        if (!isAdmin) {
             Toast.makeText(this, "Only admins can add agenda items", Toast.LENGTH_SHORT).show();
             finish();
             return;
@@ -77,6 +86,18 @@ public class AddAgenda extends AppCompatActivity {
 
         if (title.isEmpty() || description.isEmpty() || date.isEmpty() || time.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validate date format (MM/DD/YYYY)
+        if (!date.matches("\\d{2}/\\d{2}/\\d{4}")) {
+            Toast.makeText(this, "Please enter date in MM/DD/YYYY format", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validate time format (HH:MM AM/PM)
+        if (!time.matches("\\d{1,2}:\\d{2}\\s?(AM|PM|am|pm)")) {
+            Toast.makeText(this, "Please enter time in HH:MM AM/PM format", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -122,6 +143,7 @@ public class AddAgenda extends AppCompatActivity {
                             Map<String, Object> notification = new HashMap<>();
                             notification.put("title", "New Agenda Item");
                             notification.put("message", "A new agenda item has been added: " + agendaTitle);
+                            notification.put("type", "Agenda");
                             notification.put("userId", userId);
                             notification.put("timestamp", System.currentTimeMillis());
                             notification.put("read", false);

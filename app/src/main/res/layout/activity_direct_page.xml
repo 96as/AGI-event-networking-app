@@ -14,21 +14,12 @@
 
     <include layout= "@layout/activity_buttom_part"/>
 
-    <View
-        android:id="@+id/viewBackground"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_marginBottom="160dp"
-        android:background="@drawable/background_content_top"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"></View>
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageBack"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="56dp"
         android:padding="5dp"
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,13 +67,13 @@
         android:id="@+id/imageInfo"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="56dp"
 
-        android:layout_marginBottom="623dp"
+        android:layout_marginEnd="8dp"
         android:padding="4dp"
         android:src="@drawable/outline_info"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textName"
@@ -99,6 +90,7 @@
         app:layout_constraintEnd_toStartOf="@id/imageInfo"
         app:layout_constraintStart_toEndOf="@id/imageBack"
         app:layout_constraintTop_toTopOf="@id/imageBack"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRV"
         android:layout_width="match_parent"
@@ -107,18 +99,9 @@
         android:orientation="vertical"
         android:overScrollMode="never"
         android:padding="20dp"
-        android:visibility="gone"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="@id/viewBackground"
-        app:layout_constraintTop_toBottomOf="@id/imageBack"/>
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        app:layout_constraintBottom_toBottomOf="@id/viewBackground"
-        app:layout_constraintEnd_toEndOf="@id/viewBackground"
-        app:layout_constraintStart_toStartOf="@id/viewBackground"
-        app:layout_constraintTop_toTopOf="@id/viewBackground"/>
+        app:layout_constraintTop_toBottomOf="@id/textName"
+        app:layout_constraintBottom_toTopOf="@id/inputMessage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

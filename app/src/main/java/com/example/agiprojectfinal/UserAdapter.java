@@ -63,9 +63,9 @@ public class UserAdapter extends FirestoreRecyclerAdapter<UserModel, UserAdapter
                 });
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, DirectMessaging.class);
-            intent.putExtra("name", model.getName());
-            intent.putExtra("Id", model.getUserID());
+            Intent intent = new Intent(context, DirectPage.class);
+            intent.putExtra("userId", uid);
+            intent.putExtra("userName", model.getName());
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         });

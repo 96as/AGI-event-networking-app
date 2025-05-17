@@ -2,10 +2,13 @@ package com.example.agiprojectfinal;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -28,7 +31,7 @@ public class ViewAgenda extends AppCompatActivity {
     private ListView agendaListView;
     private FirebaseFirestore db;
     private List<AgendaItem> agendaItems;
-    private ArrayAdapter<AgendaItem> adapter;
+    private AgendaAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,7 @@ public class ViewAgenda extends AppCompatActivity {
         // Initialize views
         agendaListView = findViewById(R.id.agendaListView);
         agendaItems = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this, R.layout.activity_tv_for_lv, agendaItems);
+        adapter = new AgendaAdapter(this, agendaItems);
         agendaListView.setAdapter(adapter);
 
         // Set up header navigation
@@ -95,9 +98,34 @@ public class ViewAgenda extends AppCompatActivity {
             this.dateTime = dateTime;
         }
 
+        public String getTitle() { return title; }
+        public String getDescription() { return description; }
+        public String getDateTime() { return dateTime; }
+    }
+
+    // Custom adapter for agenda items
+    private class AgendaAdapter extends ArrayAdapter<AgendaItem> {
+        public AgendaAdapter(ViewAgenda context, List<AgendaItem> items) {
+            super(context, R.layout.activity_tv_for_lv, items);
+        }
+
         @Override
-        public String toString() {
-            return title + "\n" + description + "\n" + dateTime;
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_tv_for_lv, parent, false);
+            }
+
+            AgendaItem item = getItem(position);
+
+            TextView titleView = convertView.findViewById(R.id.agendaTitleTV);
+            TextView descriptionView = convertView.findViewById(R.id.agendaDescriptionTV);
+            TextView dateTimeView = convertView.findViewById(R.id.agendaDateTimeTV);
+
+            titleView.setText(item.getTitle());
+            descriptionView.setText(item.getDescription());
+            dateTimeView.setText(item.getDateTime());
+
+            return convertView;
         }
     }
 }

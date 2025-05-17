@@ -21,6 +21,7 @@ public class HeaderPart extends AppCompatActivity {
         // Header
         ImageView profile = (ImageView) findViewById(R.id.profile);
         ImageView addPostButton = (ImageView) findViewById(R.id.addPostButton);
+        ImageView viewAgendaButton = (ImageView) findViewById(R.id.viewAgendaButton);
 
         addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +37,12 @@ public class HeaderPart extends AppCompatActivity {
             }
         });
 
-
+        viewAgendaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HeaderPart.this, ViewAgenda.class));
+            }
+        });
 
     }
 }

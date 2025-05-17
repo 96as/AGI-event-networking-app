@@ -66,6 +66,7 @@ public class Login extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Get user role from Firestore
                                 FirebaseUser user = mAuth.getCurrentUser();
+                                UserSession.getInstance().setUserId(user.getUid());
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                                 
                                 db.collection("Users").document(user.getUid())
@@ -80,8 +81,8 @@ public class Login extends AppCompatActivity {
                                                     String role = document.getString("role");
                                                     UserSession.getInstance().setUserRole(role);
                                                     
-                                                    // Check if user is admin based on email
-                                                    boolean isAdmin = user.getEmail().equals("admin@alfaisal.edu");
+                                                    // Check if user is admin based on role
+                                                    boolean isAdmin = "admin".equalsIgnoreCase(role);
                                                     UserSession.getInstance().setIsAdmin(isAdmin);
                                                     
                                                     // Navigate to main activity

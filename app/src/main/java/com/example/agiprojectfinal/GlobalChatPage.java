@@ -50,6 +50,7 @@ public class GlobalChatPage extends AppCompatActivity {
         // Header
         ImageView profile = (ImageView) findViewById(R.id.profile);
         ImageView addPostButton = (ImageView) findViewById(R.id.addPostButton);
+        ImageView viewAgendaButton = findViewById(R.id.viewAgendaButton);
 
         addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +65,9 @@ public class GlobalChatPage extends AppCompatActivity {
                 startActivity(new Intent(GlobalChatPage.this, Profile.class));
             }
         });
+
+        viewAgendaButton.setOnClickListener(v -> startActivity(new Intent(GlobalChatPage.this, ViewAgenda.class)));
+
 
         // Footer
         ImageView mainPageBtn = (ImageView) findViewById(R.id.logo);

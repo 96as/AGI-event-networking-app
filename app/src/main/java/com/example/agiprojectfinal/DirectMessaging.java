@@ -21,6 +21,7 @@ public class DirectMessaging extends AppCompatActivity {
         // Header
         ImageView profile = (ImageView) findViewById(R.id.profile);
         ImageView addPostButton = (ImageView) findViewById(R.id.addPostButton);
+        ImageView viewAgendaButton = (ImageView) findViewById(R.id.viewAgendaButton);
 
         addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,6 +34,13 @@ public class DirectMessaging extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DirectMessaging.this, Profile.class));
+            }
+        });
+
+        viewAgendaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DirectMessaging.this, ViewAgenda.class));
             }
         });
 

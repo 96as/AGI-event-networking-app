@@ -12,7 +12,7 @@
         android:textStyle="bold"
         android:textSize="20sp"
         android:text="Agenda Title"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         />
 
     <TextView
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/agendaDescriptionTV"
         android:text="Description"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         />
 
     <TextView
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/agendaDateTimeTV"
         android:text="Date - Time"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         />
 
 

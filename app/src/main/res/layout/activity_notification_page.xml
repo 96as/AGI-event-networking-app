@@ -8,12 +8,12 @@
     tools:context=".NotificationPage"
     android:background="@drawable/background">
 
-    <include layout= "@layout/activity_header_part"
+    <include layout="@layout/activity_header_part"
         tools:context=".GlobalChatPage"/>
 
-    <include layout= "@layout/activity_buttom_part"/>
+    <include layout="@layout/activity_buttom_part"/>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/postList"
         android:layout_width="403dp"
         android:layout_height="593dp"

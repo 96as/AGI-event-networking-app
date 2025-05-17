@@ -35,6 +35,7 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+
         // Initialize Firebase instances
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -71,7 +72,7 @@ public class Profile extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String userId = currentUser.getUid();
-            
+
             db.collection("Users").document(userId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -86,21 +87,21 @@ public class Profile extends AppCompatActivity {
                                 String role = document.getString("role");
                                 String bio = document.getString("bio");
                                 String profileImageUrl = document.getString("profileImageUrl");
-                                
+
                                 // Extract username from email (part before @)
                                 String username = email.split("@")[0];
-                                
+
                                 // Set default role if not specified
                                 if (role == null || role.isEmpty()) {
                                     role = "user";
                                 }
-                                
+
                                 // Update UI with user data
                                 profileName.setText(name);
                                 profileUsername.setText(username);
                                 roleTextView.setText("📌 Role: " + role);
                                 emailTextView.setText("📧 Email: " + email);
-                                
+
                                 // Set bio text, or show default message if empty
                                 if (bio != null && !bio.isEmpty()) {
                                     profileBio.setText(bio);

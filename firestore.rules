@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return get(/databases/$(database)/documents/Users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Allow authenticated users to create and read comments
+    match /Comments/{commentId} {
+      allow write: if request.auth != null;
+    }
+
+    // Allow access to Posts collection
+    match /Posts/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Allow access to Users collection
+    match /Users/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Allow access to chatRooms and all subcollections (e.g., messages)
+    match /chatRooms/{chatRoomId} {
+      allow read, write: if request.auth != null;
+      match /{document=**} {
+        allow read, write: if request.auth != null;
+      }
+    }
+
+    // Rules for Agenda collection
+    match /Agenda/{document=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && isAdmin();
+    }
+
+    // Rules for Notifications collection
+    match /Notifications/{notificationId} {
+      // Users can read their own notifications
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      // Only admins can create notifications
+      allow create: if request.auth != null && isAdmin();
+      // No updates or deletes allowed
+      allow update, delete: if false;
+    }
+  }
+} 

@@ -84,6 +84,9 @@ public class AllMessagesDisplay extends AppCompatActivity {
         if(adapter != null){
             adapter.stopListening();
         }
+        if (list != null) {
+            list.setAdapter(null);
+        }
     }
 
     @Override
