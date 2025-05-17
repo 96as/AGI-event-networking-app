@@ -85,6 +85,9 @@ public class Login extends AppCompatActivity {
                                                     boolean isAdmin = "admin".equalsIgnoreCase(role);
                                                     UserSession.getInstance().setIsAdmin(isAdmin);
                                                     
+                                                    // Set user ID
+                                                    UserSession.getInstance().setUserId(user.getUid());
+
                                                     // Navigate to main activity
                                                     startActivity(new Intent(Login.this, GlobalChatPage.class));
                                                     finish();

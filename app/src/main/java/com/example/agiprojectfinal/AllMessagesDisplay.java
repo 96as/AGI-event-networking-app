@@ -33,6 +33,24 @@ public class AllMessagesDisplay extends AppCompatActivity {
 
         recyclerView();
 
+        // Header
+        ImageView profile = (ImageView) findViewById(R.id.profile);
+        ImageView addPostButton = (ImageView) findViewById(R.id.addPostButton);
+
+        addPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AllMessagesDisplay.this, AddPostPage.class));
+            }
+        });
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AllMessagesDisplay.this, Profile.class));
+            }
+        });
+
         ImageView mainPageBtn = (ImageView) findViewById(R.id.logo);
         ImageView notificationBtn = (ImageView) findViewById(R.id.notification);
         ImageView directBtn = (ImageView) findViewById(R.id.message);

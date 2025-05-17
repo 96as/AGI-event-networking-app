@@ -21,6 +21,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GlobalChatPage extends AppCompatActivity {
 
@@ -115,6 +116,13 @@ public class GlobalChatPage extends AppCompatActivity {
                             );
                             post.setLikes(document.getLong("likes").intValue());
                             post.setComments(document.getLong("comments").intValue());
+                            
+                            // Get userLikes map
+                            Map<String, Boolean> userLikes = (Map<String, Boolean>) document.get("userLikes");
+                            if (userLikes != null) {
+                                post.setUserLikes(userLikes);
+                            }
+                            
                             posts.add(post);
                         }
                         adapter.notifyDataSetChanged();
