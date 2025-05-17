@@ -1,5 +1,8 @@
 package com.example.agiprojectfinal;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Post {
     private String postId;
     private String userId;
@@ -8,9 +11,12 @@ public class Post {
     private long timestamp;
     private int likes;
     private int comments;
+    private Map<String, Boolean> userLikes; // Map to track which users have liked the post
 
     // Empty constructor needed for Firestore
-    public Post() {}
+    public Post() {
+        this.userLikes = new HashMap<>();
+    }
 
     public Post(String postId, String userId, String username, String content, long timestamp) {
         this.postId = postId;
@@ -20,6 +26,7 @@ public class Post {
         this.timestamp = timestamp;
         this.likes = 0;
         this.comments = 0;
+        this.userLikes = new HashMap<>();
     }
 
     // Getters and Setters
@@ -43,4 +50,24 @@ public class Post {
 
     public int getComments() { return comments; }
     public void setComments(int comments) { this.comments = comments; }
+
+    // New methods for handling user likes
+    public Map<String, Boolean> getUserLikes() {
+        if (userLikes == null) {
+            userLikes = new HashMap<>();
+        }
+        return userLikes;
+    }
+
+    public void setUserLikes(Map<String, Boolean> userLikes) {
+        this.userLikes = userLikes != null ? userLikes : new HashMap<>();
+    }
+
+    public boolean hasUserLiked(String userId) {
+        if (userLikes == null) {
+            return false;
+        }
+        Boolean hasLiked = userLikes.get(userId);
+        return hasLiked != null && hasLiked;
+    }
 } 

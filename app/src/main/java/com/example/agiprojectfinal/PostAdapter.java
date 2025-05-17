@@ -73,22 +73,50 @@ public class PostAdapter extends ArrayAdapter<Post> {
         // Set up like button
         likeButton.setOnClickListener(v -> {
             DocumentReference postRef = db.collection("Posts").document(post.getPostId());
-            postRef.get().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        int currentLikes = document.getLong("likes").intValue();
-                        postRef.update("likes", currentLikes + 1)
-                            .addOnCompleteListener(updateTask -> {
-                                if (updateTask.isSuccessful()) {
-                                    post.setLikes(currentLikes + 1);
-                                    likesCount.setText(String.valueOf(post.getLikes()));
-                                }
-                            });
-                    }
-                }
-            });
+            
+            // Check if user has already liked this post
+            boolean hasLiked = post.hasUserLiked(userId);
+            
+            Map<String, Object> updates = new HashMap<>();
+            if (!hasLiked) {
+                // Add like
+                updates.put("userLikes." + userId, true);
+                updates.put("likes", FieldValue.increment(1));
+                
+                postRef.update(updates)
+                    .addOnSuccessListener(aVoid -> {
+                        post.getUserLikes().put(userId, true);
+                        post.setLikes(post.getLikes() + 1);
+                        likesCount.setText(String.valueOf(post.getLikes()));
+                        likeButton.setImageResource(android.R.drawable.btn_star_big_on);
+                    })
+                    .addOnFailureListener(e -> 
+                        Toast.makeText(context, "Error updating like", Toast.LENGTH_SHORT).show()
+                    );
+            } else {
+                // Remove like
+                updates.put("userLikes." + userId, FieldValue.delete());
+                updates.put("likes", FieldValue.increment(-1));
+                
+                postRef.update(updates)
+                    .addOnSuccessListener(aVoid -> {
+                        post.getUserLikes().remove(userId);
+                        post.setLikes(post.getLikes() - 1);
+                        likesCount.setText(String.valueOf(post.getLikes()));
+                        likeButton.setImageResource(android.R.drawable.btn_star_big_off);
+                    })
+                    .addOnFailureListener(e -> 
+                        Toast.makeText(context, "Error updating like", Toast.LENGTH_SHORT).show()
+                    );
+            }
         });
+
+        // Update like button appearance based on current user's like status
+        if (post.hasUserLiked(userId)) {
+            likeButton.setImageResource(android.R.drawable.btn_star_big_on);
+        } else {
+            likeButton.setImageResource(android.R.drawable.btn_star_big_off);
+        }
 
         // Set up comment button
         View finalConvertView = convertView;

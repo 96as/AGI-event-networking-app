@@ -81,6 +81,7 @@ public class AddPostPage extends AppCompatActivity {
                 post.put("timestamp", System.currentTimeMillis());
                 post.put("likes", 0);
                 post.put("comments", 0);
+                post.put("userLikes", new HashMap<String, Boolean>()); // Initialize empty userLikes map
 
                 // Add post to Firestore
                 db.collection("Posts")
