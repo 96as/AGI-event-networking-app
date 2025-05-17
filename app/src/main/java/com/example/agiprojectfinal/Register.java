@@ -10,6 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.FirebaseFirestore;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -102,8 +105,26 @@ public class Register extends AppCompatActivity {
                                                 Toast.LENGTH_LONG).show();
                                     });
                         }
-                        else{
-                            Toast.makeText(Register.this, "User already exists!", Toast.LENGTH_LONG).show();
+                        else {
+                            Exception e = task.getException();
+                            if (e instanceof FirebaseAuthWeakPasswordException) {
+                                String reason = ((FirebaseAuthWeakPasswordException) e).getReason();
+                                Toast.makeText(Register.this,
+                                        "Weak password: " + reason,
+                                        Toast.LENGTH_LONG).show();
+                            } else if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                                Toast.makeText(Register.this,
+                                        "Invalid email address.",
+                                        Toast.LENGTH_LONG).show();
+                            } else if (e instanceof FirebaseAuthUserCollisionException) {
+                                Toast.makeText(Register.this,
+                                        "This email is already registered.",
+                                        Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(Register.this,
+                                        "Registration failed: " + e.getMessage(),
+                                        Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
                 });

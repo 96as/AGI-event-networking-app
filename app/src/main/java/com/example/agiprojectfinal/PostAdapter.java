@@ -119,6 +119,13 @@ public class PostAdapter extends ArrayAdapter<Post> {
             });
         });
 
+        // Add click listener to the entire post
+        convertView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, PostDetailsActivity.class);
+            intent.putExtra("postId", post.getPostId());
+            context.startActivity(intent);
+        });
+
         return convertView;
     }
 
