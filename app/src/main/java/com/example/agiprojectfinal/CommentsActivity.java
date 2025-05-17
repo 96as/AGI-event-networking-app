@@ -5,32 +5,28 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Query;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 public class CommentsActivity extends AppCompatActivity {
     private FirebaseFirestore db;
-    private ListView commentsListView;
+    private RecyclerView commentsRecyclerView;
     private EditText commentInput;
-    private List<Comment> comments;
-    private CommentAdapter adapter;
+    private CommentAdapter commentAdapter;
     private Post currentPost;
 
     @Override
@@ -52,11 +48,8 @@ public class CommentsActivity extends AppCompatActivity {
         );
 
         // Initialize views
-        commentsListView = findViewById(R.id.commentsList);
+        commentsRecyclerView = findViewById(R.id.commentsRecyclerView);
         commentInput = findViewById(R.id.commentInput);
-        comments = new ArrayList<>();
-        adapter = new CommentAdapter(this, comments);
-        commentsListView.setAdapter(adapter);
 
         // Display post content
         TextView postUsername = findViewById(R.id.postUsername);
@@ -73,8 +66,8 @@ public class CommentsActivity extends AppCompatActivity {
         // Set up comment submission
         findViewById(R.id.submitCommentButton).setOnClickListener(v -> submitComment());
 
-        // Load comments
-        loadComments();
+        // Set up comments RecyclerView
+        setupCommentsRecyclerView();
 
         // Set up header navigation
         ImageView profile = findViewById(R.id.profile);
@@ -86,30 +79,18 @@ public class CommentsActivity extends AppCompatActivity {
         viewAgendaButton.setOnClickListener(v -> startActivity(new Intent(CommentsActivity.this, ViewAgenda.class)));
     }
 
-    private void loadComments() {
-        db.collection("Comments")
-            .whereEqualTo("postId", currentPost.getPostId())
-            .orderBy("timestamp")
-            .get()
-            .addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    comments.clear();
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Comment comment = new Comment(
-                            document.getId(),
-                            document.getString("postId"),
-                            document.getString("userId"),
-                            document.getString("username"),
-                            document.getString("content"),
-                            document.getLong("timestamp")
-                        );
-                        comments.add(comment);
-                    }
-                    adapter.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(CommentsActivity.this, "Error loading comments", Toast.LENGTH_SHORT).show();
-                }
-            });
+    private void setupCommentsRecyclerView() {
+        Query query = db.collection("Comments")
+                .whereEqualTo("postId", currentPost.getPostId())
+                .orderBy("timestamp", Query.Direction.DESCENDING);
+
+        FirestoreRecyclerOptions<Comment> options = new FirestoreRecyclerOptions.Builder<Comment>()
+                .setQuery(query, Comment.class)
+                .build();
+
+        commentAdapter = new CommentAdapter(options);
+        commentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        commentsRecyclerView.setAdapter(commentAdapter);
     }
 
     private void submitComment() {
@@ -131,18 +112,32 @@ public class CommentsActivity extends AppCompatActivity {
 
         db.collection("Comments")
             .add(comment)
-            .addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    // Update post comment count
-                    db.collection("Posts").document(currentPost.getPostId())
-                        .update("comments", currentPost.getComments() + 1);
-                    
-                    // Clear input and reload comments
-                    commentInput.setText("");
-                    loadComments();
-                } else {
-                    Toast.makeText(CommentsActivity.this, "Error posting comment", Toast.LENGTH_SHORT).show();
-                }
+            .addOnSuccessListener(documentReference -> {
+                commentInput.setText("");
+                Toast.makeText(this, "Comment added successfully", Toast.LENGTH_SHORT).show();
+                
+                // Update comment count in the post
+                db.collection("Posts").document(currentPost.getPostId())
+                    .update("comments", com.google.firebase.firestore.FieldValue.increment(1));
+            })
+            .addOnFailureListener(e -> {
+                Toast.makeText(this, "Error posting comment", Toast.LENGTH_SHORT).show();
             });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (commentAdapter != null) {
+            commentAdapter.startListening();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (commentAdapter != null) {
+            commentAdapter.stopListening();
+        }
     }
 } 

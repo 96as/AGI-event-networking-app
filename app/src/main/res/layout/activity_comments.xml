@@ -57,14 +57,21 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Comments List -->
-    <ListView
-        android:id="@+id/commentsList"
+    <!-- Comments Section -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Comments"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:padding="16dp"/>
+
+    <!-- Replace ListView with RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/commentsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="8dp"
         android:padding="8dp"/>
 
     <!-- Comment Input Area -->
@@ -78,7 +85,7 @@
         <EditText
             android:id="@+id/commentInput"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:hint="Write a comment..."
             android:padding="8dp"

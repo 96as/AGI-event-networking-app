@@ -2,6 +2,7 @@ package com.example.agiprojectfinal;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,17 +30,21 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import io.reactivex.rxjava3.annotations.NonNull;
 
 public class AddPostPage extends AppCompatActivity {
 
+    private static final String TAG = "AddPostPage";
     private EditText postText;
     private Button addPostButton;
     private FirebaseFirestore db;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,17 +52,16 @@ public class AddPostPage extends AppCompatActivity {
         setContentView(R.layout.activity_add_post_page);
 
         // Set Add Agenda button visibility based on admin status
-        Button addAgendaButton = (Button) findViewById(R.id.addAgenda);
+        Button addAgendaButton = findViewById(R.id.addAgenda);
         boolean isAdmin = UserSession.getInstance().isAdmin();
         addAgendaButton.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
-
 
         // Initialize Firestore
         db = FirebaseFirestore.getInstance();
 
         // Initialize views
-        EditText postText = (EditText) findViewById(R.id.postText);
-        Button submitPostButton = (Button) findViewById(R.id.submitPostButton);
+        postText = findViewById(R.id.postText);
+        Button submitPostButton = findViewById(R.id.submitPostButton);
 
         // Set up post button
         submitPostButton.setOnClickListener(new View.OnClickListener() {
@@ -69,9 +73,12 @@ public class AddPostPage extends AppCompatActivity {
                     return;
                 }
 
-                 //Get current user info
+                // Get current user info
                 String userId = UserSession.getInstance().getUserId();
                 String username = UserSession.getInstance().getUsername();
+
+                // Debug log
+                Log.d(TAG, "Attempting to create post. UserID: " + userId + ", Username: " + username);
 
                 // Create post data
                 Map<String, Object> post = new HashMap<>();
@@ -86,27 +93,48 @@ public class AddPostPage extends AppCompatActivity {
                 // Add post to Firestore
                 db.collection("Posts")
                         .add(post)
-                        .addOnCompleteListener(new OnCompleteListener<com.google.firebase.firestore.DocumentReference>() {
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
-                            public void onComplete(Task<com.google.firebase.firestore.DocumentReference> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(AddPostPage.this, "Post added successfully", Toast.LENGTH_SHORT).show();
-                                    // Clear the input and return to global chat
-                                    postText.setText("");
-                                    startActivity(new Intent(AddPostPage.this, GlobalChatPage.class));
-                                    finish();
-                                } else {
-                                    Toast.makeText(AddPostPage.this, "Error adding post", Toast.LENGTH_SHORT).show();
-                                }
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d(TAG, "Post added successfully with ID: " + documentReference.getId());
+                                Toast.makeText(AddPostPage.this, "Post added successfully", Toast.LENGTH_SHORT).show();
+                                postText.setText("");
+                                startActivity(new Intent(AddPostPage.this, GlobalChatPage.class));
+                                finish();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e(TAG, "Error adding post", e);
+                                Toast.makeText(AddPostPage.this, "Error adding post: " + e.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         });
             }
         });
 
+        // Header
+        ImageView profile = findViewById(R.id.profile);
+        ImageView addPostButton = findViewById(R.id.addPostButton);
+
+        addPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AddPostPage.this, AddPostPage.class));
+            }
+        });
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AddPostPage.this, Profile.class));
+            }
+        });
+
         // Footer
-        ImageView mainPageBtn = (ImageView) findViewById(R.id.logo);
-        ImageView notificationBtn = (ImageView) findViewById(R.id.notification);
-        ImageView directBtn = (ImageView) findViewById(R.id.message);
+        ImageView mainPageBtn = findViewById(R.id.logo);
+        ImageView notificationBtn = findViewById(R.id.notification);
+        ImageView directBtn = findViewById(R.id.message);
 
         mainPageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
