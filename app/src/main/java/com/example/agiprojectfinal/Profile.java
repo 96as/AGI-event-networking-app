@@ -18,5 +18,50 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        // Header
+        ImageView profile = (ImageView) findViewById(R.id.profile);
+        ImageView addPostButton = (ImageView) findViewById(R.id.addPostButton);
+
+        addPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Profile.this, AddPostPage.class));
+            }
+        });
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Profile.this, Profile.class));
+            }
+        });
+
+        // Footer
+        ImageView mainPageBtn = (ImageView) findViewById(R.id.logo);
+        ImageView notificationBtn = (ImageView) findViewById(R.id.notification);
+        ImageView directBtn = (ImageView) findViewById(R.id.message);
+
+        mainPageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Profile.this, GlobalChatPage.class));
+            }
+        });
+
+        notificationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Profile.this, NotificationPage.class));
+            }
+        });
+
+        directBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Profile.this, AllMessagesDisplay.class));
+            }
+        });
     }
+
+
 }
