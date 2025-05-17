@@ -3,47 +3,59 @@ service cloud.firestore {
   match /databases/{database}/documents {
     // Helper function to check if user is admin
     function isAdmin() {
-      return get(/databases/$(database)/documents/Users/$(request.auth.uid)).data.role == 'admin';
+      let userData = get(/databases/$(database)/documents/Users/$(request.auth.uid)).data;
+      return userData != null && userData.role == 'admin';
+    }
+
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
     }
 
     // Allow authenticated users to create and read comments
     match /Comments/{commentId} {
-      allow write: if request.auth != null;
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
     }
 
     // Allow access to Posts collection
     match /Posts/{document=**} {
-      allow read, write: if request.auth != null;
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated();
     }
     
     // Allow access to Users collection
     match /Users/{userId} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null && request.auth.uid == userId;
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && request.auth.uid == userId;
     }
 
     // Allow access to chatRooms and all subcollections (e.g., messages)
     match /chatRooms/{chatRoomId} {
-      allow read, write: if request.auth != null;
+      allow read, write: if isAuthenticated();
       match /{document=**} {
-        allow read, write: if request.auth != null;
+        allow read, write: if isAuthenticated();
       }
     }
 
     // Rules for Agenda collection
     match /Agenda/{document=**} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null && isAdmin();
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && isAdmin();
     }
 
     // Rules for Notifications collection
     match /Notifications/{notificationId} {
       // Users can read their own notifications
-      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
       // Only admins can create notifications
-      allow create: if request.auth != null && isAdmin();
-      // No updates or deletes allowed
-      allow update, delete: if false;
+      allow create: if isAuthenticated() && isAdmin();
+      // Allow users to update their own notifications (for marking as read)
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      // No deletes allowed
+      allow delete: if false;
     }
   }
 } 

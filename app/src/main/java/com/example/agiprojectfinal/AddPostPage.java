@@ -108,6 +108,8 @@ public class AddPostPage extends AppCompatActivity {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 Log.d(TAG, "Post added successfully with ID: " + documentReference.getId());
+                                // Create notifications for all users
+                                createNotification(content);
                                 Toast.makeText(AddPostPage.this, "Post added successfully", Toast.LENGTH_SHORT).show();
                                 postText.setText("");
                                 startActivity(new Intent(AddPostPage.this, GlobalChatPage.class));

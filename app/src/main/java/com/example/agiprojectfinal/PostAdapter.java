@@ -60,7 +60,29 @@ public class PostAdapter extends ArrayAdapter<Post> {
         ImageButton likeButton = convertView.findViewById(R.id.likeButton);
         ImageButton commentButton = convertView.findViewById(R.id.commentButton);
 
-        usernameText.setText(post.getUsername());
+        // Set username with proper formatting
+        String username = post.getUsername();
+        if (username != null && !username.isEmpty()) {
+            usernameText.setText(username);
+        } else {
+            // If username is not available, try to get it from Firestore
+            db.collection("Users").document(post.getUserId())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String name = documentSnapshot.getString("name");
+                        if (name != null && !name.isEmpty()) {
+                            usernameText.setText(name);
+                        } else {
+                            usernameText.setText("Unknown User");
+                        }
+                    } else {
+                        usernameText.setText("Unknown User");
+                    }
+                })
+                .addOnFailureListener(e -> usernameText.setText("Unknown User"));
+        }
+
         postContent.setText(post.getContent());
         likesCount.setText(String.valueOf(post.getLikes()));
         commentsCount.setText(String.valueOf(post.getComments()));
