@@ -80,9 +80,16 @@ public class Login extends AppCompatActivity {
                                                     String role = document.getString("role");
                                                     UserSession.getInstance().setUserRole(role);
                                                     
+                                                    // Get and set username
+                                                    String username = document.getString("name");
+                                                    UserSession.getInstance().setUsername(username);
+                                                    
                                                     // Check if user is admin based on email
                                                     boolean isAdmin = user.getEmail().equals("admin@alfaisal.edu");
                                                     UserSession.getInstance().setIsAdmin(isAdmin);
+                                                    
+                                                    // Set user ID
+                                                    UserSession.getInstance().setUserId(user.getUid());
                                                     
                                                     // Navigate to main activity
                                                     startActivity(new Intent(Login.this, GlobalChatPage.class));
