@@ -56,6 +56,8 @@ public class activity_editProfile extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 100;
     private static final int PICK_IMAGE_REQUEST = 1;
 
+
+
     private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(
         new ActivityResultContracts.StartActivityForResult(),
         result -> {
@@ -79,6 +81,59 @@ public class activity_editProfile extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Header
+        ImageView profile = (ImageView) findViewById(R.id.profile);
+        ImageView addPostButton = (ImageView) findViewById(R.id.addPostButton);
+        ImageView viewAgendaButton = (ImageView) findViewById(R.id.viewAgendaButton);
+
+        addPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(activity_editProfile.this, AddPostPage.class));
+            }
+        });
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(activity_editProfile.this, Profile.class));
+            }
+        });
+
+        viewAgendaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(activity_editProfile.this, ViewAgenda.class));
+            }
+        });
+
+        // Footer
+        ImageView mainPageBtn = (ImageView) findViewById(R.id.logo);
+        ImageView notificationBtn = (ImageView) findViewById(R.id.notification);
+        ImageView directBtn = (ImageView) findViewById(R.id.message);
+
+        mainPageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(activity_editProfile.this, GlobalChatPage.class));
+            }
+        });
+
+        notificationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(activity_editProfile.this, NotificationPage.class));
+            }
+        });
+
+        directBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(activity_editProfile.this, AllMessagesDisplay.class));
+            }
+        });
+
 
         // Initialize Firebase instances
         mAuth = FirebaseAuth.getInstance();

@@ -46,6 +46,10 @@ public class DirectPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_direct_page);
         UserSession.getInstance().init(this);
+
+
+
+
         // Initialize Firestore
         db = FirebaseFirestore.getInstance();
         currentUserId = UserSession.getInstance().getUserId();
@@ -212,8 +216,9 @@ public class DirectPage extends AppCompatActivity {
 
     private void setupNavigation() {
         // Header
-        ImageView profile = findViewById(R.id.profile);
-        ImageView addPostButton = findViewById(R.id.addPostButton);
+        ImageView profile = (ImageView) findViewById(R.id.profile);
+        ImageView addPostButton = (ImageView) findViewById(R.id.addPostButton);
+        ImageView viewAgendaButton = (ImageView) findViewById(R.id.viewAgendaButton);
 
         addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,10 +234,17 @@ public class DirectPage extends AppCompatActivity {
             }
         });
 
+        viewAgendaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DirectPage.this, ViewAgenda.class));
+            }
+        });
+
         // Footer
-        ImageView mainPageBtn = findViewById(R.id.logo);
-        ImageView notificationBtn = findViewById(R.id.notification);
-        ImageView directBtn = findViewById(R.id.message);
+        ImageView mainPageBtn = (ImageView) findViewById(R.id.logo);
+        ImageView notificationBtn = (ImageView) findViewById(R.id.notification);
+        ImageView directBtn = (ImageView) findViewById(R.id.message);
 
         mainPageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -254,6 +266,7 @@ public class DirectPage extends AppCompatActivity {
                 startActivity(new Intent(DirectPage.this, AllMessagesDisplay.class));
             }
         });
+
     }
 
     @Override

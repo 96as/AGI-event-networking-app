@@ -57,6 +57,33 @@ public class ViewAgenda extends AppCompatActivity {
         addPostButton.setOnClickListener(v -> startActivity(new Intent(ViewAgenda.this, AddPostPage.class)));
         viewAgendaButton.setOnClickListener(v -> startActivity(new Intent(ViewAgenda.this, ViewAgenda.class)));
 
+        // Footer
+        ImageView mainPageBtn = (ImageView) findViewById(R.id.logo);
+        ImageView notificationBtn = (ImageView) findViewById(R.id.notification);
+        ImageView directBtn = (ImageView) findViewById(R.id.message);
+
+        mainPageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ViewAgenda.this, GlobalChatPage.class));
+            }
+        });
+
+        notificationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ViewAgenda.this, NotificationPage.class));
+            }
+        });
+
+        directBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ViewAgenda.this, AllMessagesDisplay.class));
+            }
+        });
+
+
         // Load agenda items
         loadAgendaItems();
     }
