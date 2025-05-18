@@ -41,10 +41,14 @@ public class UserAdapter extends FirestoreRecyclerAdapter<UserModel, UserAdapter
         String name = model.getName();
         String uid = getSnapshots().getSnapshot(position).getId();
 
-
-        holder.user.setText(model.getName());
-
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        // Add (me) indicator if this is the current user
+        if (uid.equals(currentUserId)) {
+            holder.user.setText(name + " (me)");
+        } else {
+            holder.user.setText(name);
+        }
 
         FirebaseFirestore.getInstance()
                 .collection("Messages")
